@@ -1,0 +1,10 @@
+[package]
+name = "mysql-leak"
+description = "Small script to test some infinite memory growth with MySQL."
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+rand = "0.8.5"
+sqlx = { git = "https://github.com/launchbadge/sqlx", rev = "60d033e", features = ["mysql", "runtime-tokio-native-tls"] }
+tokio = { version = "1.26", features = ["macros"] }
