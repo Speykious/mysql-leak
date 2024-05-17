@@ -1,5 +1,6 @@
 use std::env;
 use std::error::Error;
+use std::time::Instant;
 
 use rand::rngs::ThreadRng;
 use rand::Rng;
@@ -18,36 +19,41 @@ async fn main() -> Result<(), Box<dyn Error>> {
 	let mut bulk_buf = Vec::with_capacity(bulk_count);
 	let mut rng = rand::thread_rng();
 
-	for i in 0..3000 {
+	let start = Instant::now();
+
+	for i in 0..1000 {
 		bulk_buf.clear();
 
 		for _ in 0..bulk_count {
-			bulk_buf.push((
-				randnum(&mut rng),
-				randstr(&mut rng),
-				randnum(&mut rng),
-				randstr(&mut rng),
-				randnum(&mut rng),
-				randstr(&mut rng),
-			));
+			bulk_buf.push((randnum(&mut rng), randnum(&mut rng), randstr(&mut rng)));
 		}
 
 		println!("  bulk insert #{}", i + 1);
 
-		let mut query_builder = QueryBuilder::new(
-			"INSERT INTO mysqlleak.rands (randnum1, randstr1, randnum2, randstr2, randnum3, randstr3) ",
-		);
+		// build query for values
+		{
+			let mut query_builder = QueryBuilder::new("INSERT INTO mysqlleak_demo.values (rand_a, rand_b, rand_s) ");
 
-		query_builder.push_values(&bulk_buf, |mut buff, (n1, s1, n2, s2, n3, s3)| {
-			buff.push_bind(n1)
-				.push_bind(s1.as_str())
-				.push_bind(n2)
-				.push_bind(s2.as_str())
-				.push_bind(n3)
-				.push_bind(s3.as_str());
-		});
+			query_builder.push_values(&bulk_buf, |mut buff, (a, b, s)| {
+				buff.push_bind(a).push_bind(b).push_bind(s.as_str());
+			});
 
-		query_builder.build().execute(&pool).await?;
+			query_builder.build().execute(&pool).await?;
+		}
+
+		// build query for times
+		{
+			let mut query_builder = QueryBuilder::new("INSERT INTO mysqlleak_demo.times (rand_a, millis) ");
+
+			let millis = start.elapsed().as_millis() as u64;
+			query_builder.push_values(&bulk_buf, |mut b, (a, _, _)| {
+				b.push_bind(a).push_bind(millis);
+			});
+
+			query_builder.push("ON DUPLICATE KEY UPDATE millis = VALUES(millis)");
+
+			query_builder.build().execute(&pool).await?;
+		}
 	}
 
 	println!("testing bulk inserts: stop");
@@ -56,7 +62,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
 }
 
 fn randnum(rng: &mut ThreadRng) -> i32 {
-	rng.gen_range(-1000..=1000)
+	rng.gen_range(-1_000_000..=1_000_000)
 }
 
 fn randstr(rng: &mut ThreadRng) -> String {
