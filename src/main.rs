@@ -1,6 +1,5 @@
 use std::env;
 use std::error::Error;
-use std::time::Instant;
 
 use rand::rngs::ThreadRng;
 use rand::Rng;
@@ -19,16 +18,15 @@ async fn main() -> Result<(), Box<dyn Error>> {
 	let mut bulk_buf = Vec::with_capacity(bulk_count);
 	let mut rng = rand::thread_rng();
 
-	let start = Instant::now();
-
 	for i in 0..1000 {
 		bulk_buf.clear();
 
-		for _ in 0..bulk_count {
+		let curr_count = bulk_count - 200 + rng.gen_range(0..=400);
+		for _ in 0..curr_count {
 			bulk_buf.push((randnum(&mut rng), randnum(&mut rng), randstr(&mut rng)));
 		}
 
-		println!("  bulk insert #{}", i + 1);
+		println!("  bulk insert #{} (count = {curr_count})", i + 1);
 
 		// build query for values
 		{
@@ -37,20 +35,6 @@ async fn main() -> Result<(), Box<dyn Error>> {
 			query_builder.push_values(&bulk_buf, |mut buff, (a, b, s)| {
 				buff.push_bind(a).push_bind(b).push_bind(s.as_str());
 			});
-
-			query_builder.build().execute(&pool).await?;
-		}
-
-		// build query for times
-		{
-			let mut query_builder = QueryBuilder::new("INSERT INTO mysqlleak_demo.times (rand_a, millis) ");
-
-			let millis = start.elapsed().as_millis() as u64;
-			query_builder.push_values(&bulk_buf, |mut b, (a, _, _)| {
-				b.push_bind(a).push_bind(millis);
-			});
-
-			query_builder.push("ON DUPLICATE KEY UPDATE millis = VALUES(millis)");
 
 			query_builder.build().execute(&pool).await?;
 		}
