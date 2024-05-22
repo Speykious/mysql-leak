@@ -50,8 +50,9 @@ fn randnum(rng: &mut ThreadRng) -> i32 {
 }
 
 fn randstr(rng: &mut ThreadRng) -> String {
-	let mut buf = Vec::with_capacity(100);
-	for _ in 0..rng.gen_range(1..=100) {
+	let len = rng.gen_range(1..=100);
+	let mut buf = Vec::with_capacity(len);
+	for _ in 0..len {
 		buf.push(rng.gen_range(b'a'..=b'z'));
 	}
 	String::from_utf8(buf).unwrap()
