@@ -18,10 +18,10 @@ async fn main() -> Result<(), Box<dyn Error>> {
 	let mut bulk_buf = Vec::with_capacity(bulk_count);
 	let mut rng = rand::thread_rng();
 
-	for i in 0..1000 {
+	for i in 0..10_000 {
 		bulk_buf.clear();
 
-		let curr_count = bulk_count - 200 + rng.gen_range(0..=400);
+		let curr_count = bulk_count;// - 200 + rng.gen_range(0..=400);
 		for _ in 0..curr_count {
 			bulk_buf.push((randnum(&mut rng), randnum(&mut rng), randstr(&mut rng)));
 		}
