@@ -16,7 +16,7 @@ Since the linear memory growth happens both in Java and Rust, it is highly likel
 
 MySQL `.cnf` file used in the Docker container:
 
-```toml
+```ini
 [mysqld]
 character-set-server=utf8mb4
 collation-server=utf8mb4_unicode_ci
