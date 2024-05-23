@@ -2,6 +2,8 @@
 
 This is a simple program that demonstrates a constant growth in `mysqld`'s memory consumption, first in Rust with the `sqlx` crate, second in Java with `mysql-connector-j`, when doing multiple bulk inserts.
 
+> For the record, this is just a single-instance database and not one with master-slave replication.
+
 Here is a graph of this growth using the `mysql:8.2` Docker image:
 
 - Rust with `sqlx`
@@ -25,6 +27,17 @@ log-bin-trust-function-creators=1
 [client]
 default-character-set=utf8mb4
 ```
+
+## What we tried
+
+Everything we have tried below has failed to prevent this constant growth (sometimes combining them):
+
+- sleep for a second between each query (Rust, Java)
+- having only one SQL connection (Rust, Java)
+- reduce the bulk size in lines (Rust, Java)
+- not having a prepared statement (Java - less secure)
+- configuring InnoDB parameters like `innodb_buffer_pool_size = 1G`
+- configuring `mysqld` parameters like `tmp-table-size = 200M` and `max-heap-table-size = 200M`
 
 ## How to run the program
 
