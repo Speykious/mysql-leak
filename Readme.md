@@ -12,6 +12,8 @@ Here is a graph of this growth using the `mysql:8.2` Docker image:
 - Java with `mysql-connector-j`
   ![Graph from Docker Desktop showing constant memory growth with the Java script](/docker-graph-java-sql.png)
 
+> **Important note:** these graphs are provided by the Portainer extension of Docker Desktop and not by Docker Desktop itself. Docker Desktop doesn't seem to show a growth in memory consumption, but this doesn't correlate with local runs of this program which eventually crash the server when left unsupervised.
+
 Restarting the `mysqld` daemon resets the memory consumption to about 520 MB.
 
 Since the linear memory growth happens both in Java and Rust, it is highly likely to be related to MySQL. That being said, I have looked into MySQL's statement cache settings, inspected connections to make sure `sqlx` wasn't creating tons of connections without properly releasing them, and found no concrete path to the root of the issue.
