@@ -1,0 +1,23 @@
+--------------
+mysql  Ver 8.3.0 for macos14.2 on arm64 (Homebrew)
+
+Connection id:		38
+Current database:	mysqlleak_demo
+Current user:		root@192.168.65.1
+SSL:			Cipher in use is TLS_AES_128_GCM_SHA256
+Current pager:		stdout
+Using outfile:		''
+Using delimiter:	;
+Server version:		8.2.0 MySQL Community Server - GPL
+Protocol version:	10
+Connection:		127.0.0.1 via TCP/IP
+Server characterset:	utf8mb4
+Db     characterset:	utf8mb4
+Client characterset:	utf8mb4
+Conn.  characterset:	utf8mb4
+TCP port:		5001
+Uptime:			2 hours 13 min 21 sec
+
+Threads: 2  Questions: 30108  Slow queries: 0  Opens: 214  Flush tables: 3  Open tables: 133  Queries per second avg: 3.763
+--------------
+

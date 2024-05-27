@@ -1,0 +1,3 @@
+Id	User	Host	db	Command	Time	State	Info
+5	event_scheduler	localhost	NULL	Daemon	8000	Waiting on empty queue	NULL
+37	root	192.168.65.1:63128	mysqlleak_demo	Query	0	init	SHOW FULL PROCESSLIST

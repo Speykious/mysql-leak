@@ -1,0 +1,52 @@
+bash-4.4# cat /proc/meminfo
+MemTotal:        8029248 kB
+MemFree:         4856696 kB
+MemAvailable:    6974452 kB
+Buffers:          280024 kB
+Cached:          1957752 kB
+SwapCached:            0 kB
+Active:          1084216 kB
+Inactive:        1847220 kB
+Active(anon):     713556 kB
+Inactive(anon):        0 kB
+Active(file):     370660 kB
+Inactive(file):  1847220 kB
+Unevictable:           0 kB
+Mlocked:               0 kB
+SwapTotal:       1048572 kB
+SwapFree:        1048572 kB
+Zswap:                 0 kB
+Zswapped:              0 kB
+Dirty:                48 kB
+Writeback:             0 kB
+AnonPages:        688244 kB
+Mapped:           219824 kB
+Shmem:             19896 kB
+KReclaimable:      92816 kB
+Slab:             145864 kB
+SReclaimable:      92816 kB
+SUnreclaim:        53048 kB
+KernelStack:        5376 kB
+PageTables:         4360 kB
+SecPageTables:         0 kB
+NFS_Unstable:          0 kB
+Bounce:                0 kB
+WritebackTmp:          0 kB
+CommitLimit:     5063196 kB
+Committed_AS:    1911004 kB
+VmallocTotal:   133141626880 kB
+VmallocUsed:        2488 kB
+VmallocChunk:          0 kB
+Percpu:             2944 kB
+AnonHugePages:    587776 kB
+ShmemHugePages:        0 kB
+ShmemPmdMapped:        0 kB
+FileHugePages:         0 kB
+FilePmdMapped:         0 kB
+HugePages_Total:       0
+HugePages_Free:        0
+HugePages_Rsvd:        0
+HugePages_Surp:        0
+Hugepagesize:       2048 kB
+Hugetlb:               0 kB
+bash-4.4# 

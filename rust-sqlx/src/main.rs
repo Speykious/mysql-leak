@@ -37,6 +37,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
 			});
 
 			query_builder.build().execute(&pool).await?;
+			// std::thread::sleep(Duration::from_millis(500));
 		}
 	}
 
