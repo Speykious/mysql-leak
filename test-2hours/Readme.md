@@ -2,7 +2,7 @@
 
 This test was made because of a request from Wilson Hauck for this kind of additional information on [the corresponding StackOverflow thread](https://stackoverflow.com/q/78523958/14266625).
 
-I added a thread sleep of 0.5s to the script before running it, but even so, it finished inserting 10,000 rows after running for 1h50m.
+I added a thread sleep of 0.5s to the script before running it, but even so, it finished inserting 10,000 bulks of 1000 rows after running for 1h50m.
 
 Each folder in `test-2hours` contains info gathered from the Docker container some time after the script started, except `0-before` which contains info taken before that.
 
